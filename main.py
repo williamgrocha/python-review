@@ -19,7 +19,7 @@ def cadastrar_nome():
         print("Nome cadastrado!")
 
 def listar_nomes():
-    if nomes == []:
+    if not nomes:
         print("Não há nenhum nome cadastrado.")
     else:
         print("Nomes cadastrados: ")
@@ -30,7 +30,7 @@ def remover_nome():
     remover = input("Nome a ser removido: ")
     remover = remover.strip()
     remover = remover.capitalize()
-    if nomes == []:
+    if not nomes:
         print("Não há nenhum nome cadastrado")
     elif remover in nomes:
         nomes.remove(remover)
