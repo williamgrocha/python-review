@@ -1,3 +1,5 @@
+import json
+
 nomes = []
 
 def menu():
@@ -38,6 +40,10 @@ def remover_nome():
     else: 
         print("Este nome não consta na lista.")
 
+def salvar_dados():
+    with open('lista-nomes.json', 'w') as f:
+        json.dump(nomes, f)
+
 def main():
     while True:
         menu()
@@ -52,6 +58,7 @@ def main():
 
         elif opcao == "4":
             print("Saindo...")
+            salvar_dados()
             break
 
         else:
