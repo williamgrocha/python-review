@@ -1,16 +1,16 @@
 import json
 
 def carregar_dados():
-     with open("lista-nomes.json", "r") as f:
-        lista_nomes = f.read()
-        x = json.loads(lista_nomes)
-        return x
+    try:
+        with open("lista-nomes.json", "r") as f:
+            lista_nomes = f.read()
+            x = json.loads(lista_nomes)
+            return x
+    except FileNotFoundError:
+        return []
+
      
-lista_arquivo = carregar_dados()
-if not lista_arquivo:
-    nomes = []
-else:
-    nomes = lista_arquivo
+nomes = carregar_dados()
      
 def menu():
     print("1 - Cadastrar nome")
