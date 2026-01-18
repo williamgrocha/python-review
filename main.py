@@ -57,4 +57,5 @@ def main():
         else:
             print("Opção Inválida")
 
-main()
+if __name__ == "__main__":
+    main()
