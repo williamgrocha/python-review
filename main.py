@@ -1,7 +1,17 @@
 import json
 
-nomes = []
-
+def carregar_dados():
+     with open("lista-nomes.json", "r") as f:
+        lista_nomes = f.read()
+        x = json.loads(lista_nomes)
+        return x
+     
+lista_arquivo = carregar_dados()
+if not lista_arquivo:
+    nomes = []
+else:
+    nomes = lista_arquivo
+     
 def menu():
     print("1 - Cadastrar nome")
     print("2 - Listar nomes")
