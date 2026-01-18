@@ -1,4 +1,12 @@
-import json
+import json, sqlite3
+
+def init_db():
+    conn = sqlite3.connect("nomes.db")
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS pessoas
+                (id INTEGER PRIMARY KEY, nome TEXT NOT NULL)''')
+    conn.commit()
+    conn.close()
 
 def carregar_dados():
     try:
@@ -55,6 +63,7 @@ def salvar_dados():
         json.dump(nomes, f)
 
 def main():
+    init_db()
     while True:
         menu()
         opcao = input("Escolha uma opção: ")
