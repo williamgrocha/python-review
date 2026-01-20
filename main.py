@@ -37,7 +37,7 @@ def cadastrar_nome():
     
     conn = sqlite3.connect("nomes.db")
     c = conn.cursor()
-    c.execute("SELECT 1 FROM pessoas WHERE nome = (?)", (nome, ))
+    c.execute("SELECT 1 FROM pessoas WHERE nome = ?", (nome, ))
     if c.fetchone() is not None:
         print("Esse nome já foi cadastrado")
         conn.close()
@@ -60,16 +60,19 @@ def listar_nomes():
             print(">", i[0])
     
 def remover_nome():
-    remover = input("Nome a ser removido: ")
-    remover = remover.strip()
-    remover = remover.capitalize()
-    if not nomes:
-        print("Não há nenhum nome cadastrado")
-    elif remover in nomes:
-        nomes.remove(remover)
-        print(remover, "foi removido com sucesso!")
-    else: 
-        print("Este nome não consta na lista.")
+    nome = input("Nome a ser removido: ")
+    nome = nome.strip()
+    nome = nome.capitalize()
+
+    conn = sqlite3.connect("nomes.db")
+    c = conn.cursor()
+    c.execute("DELETE FROM pessoas WHERE nome = ?", (nome,))
+    conn.commit()
+    if c.rowcount == 0:
+        print("Esse nome não consta em nossos cadastros.")
+    else:
+        print("O nome foi %s removido com sucesso." %nome)
+    conn.close()
 
 def salvar_dados():
     with open('lista-nomes.json', 'w') as f:
