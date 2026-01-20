@@ -30,22 +30,35 @@ def cadastrar_nome():
     nome = input("Digite um nome: ")
     nome = nome.strip()
     nome = nome.capitalize()
-    if nome in nomes:
-        print("Esse nome já foi cadastrado. Tente novamente.")
-    elif nome == "":
+
+    if nome == "":
         print("Insira um nome válido.")
+        return
+    
+    conn = sqlite3.connect("nomes.db")
+    c = conn.cursor()
+    c.execute("SELECT 1 FROM pessoas WHERE nome = (?)", (nome, ))
+    if c.fetchone() is not None:
+        print("Esse nome já foi cadastrado")
+        conn.close()
     else:
-        nomes.append(nome)
+        c.execute("INSERT INTO pessoas (nome) VALUES (?)", (nome, ))
         print("Nome cadastrado!")
+        conn.commit()
+        conn.close()
 
 def listar_nomes():
-    if not nomes:
-        print("Não há nenhum nome cadastrado.")
+    conn = sqlite3.connect("nomes.db")
+    c = conn.cursor()
+    c.execute("SELECT nome FROM pessoas")
+    resultado = c.fetchall()
+    conn.close()
+    if resultado == []:
+        print("Não há nenhum nome na lista.")
     else:
-        print("Nomes cadastrados: ")
-        for n in nomes:
-            print(">", n)
-
+        for i in resultado:
+            print(">", i[0])
+    
 def remover_nome():
     remover = input("Nome a ser removido: ")
     remover = remover.strip()
