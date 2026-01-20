@@ -14,7 +14,7 @@ def cadastrar_nome():
     if nome == "":
         print("Insira um nome válido.")
         return
-    if not db.inserir_nome():
+    if not db.inserir_nome(nome):
         print("Esse nome já consta em nossos cadastros.")
     else:
         print("Nome cadastrado com sucesso!")
