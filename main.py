@@ -62,10 +62,6 @@ def remover_nome():
         print("O nome foi %s removido com sucesso." %nome)
     conn.close()
 
-def salvar_dados():
-    with open('lista-nomes.json', 'w') as f:
-        json.dump(nomes, f)
-
 def main():
     init_db()
     while True:
@@ -81,7 +77,6 @@ def main():
 
         elif opcao == "4":
             print("Saindo...")
-            salvar_dados()
             break
 
         else:
