@@ -1,4 +1,4 @@
-import json, sqlite3
+import sqlite3
 
 def init_db():
     conn = sqlite3.connect("nomes.db")
