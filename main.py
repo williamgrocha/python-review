@@ -1,12 +1,4 @@
-import sqlite3
-
-def init_db():
-    conn = sqlite3.connect("nomes.db")
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS pessoas
-                (id INTEGER PRIMARY KEY, nome TEXT NOT NULL)''')
-    conn.commit()
-    conn.close()
+import db
      
 def menu():
     print("1 - Cadastrar nome")
@@ -22,25 +14,13 @@ def cadastrar_nome():
     if nome == "":
         print("Insira um nome válido.")
         return
-    
-    conn = sqlite3.connect("nomes.db")
-    c = conn.cursor()
-    c.execute("SELECT 1 FROM pessoas WHERE nome = ?", (nome, ))
-    if c.fetchone() is not None:
-        print("Esse nome já foi cadastrado")
-        conn.close()
+    if not db.inserir_nome():
+        print("Esse nome já consta em nossos cadastros.")
     else:
-        c.execute("INSERT INTO pessoas (nome) VALUES (?)", (nome, ))
-        print("Nome cadastrado!")
-        conn.commit()
-        conn.close()
+        print("Nome cadastrado com sucesso!")
 
 def listar_nomes():
-    conn = sqlite3.connect("nomes.db")
-    c = conn.cursor()
-    c.execute("SELECT nome FROM pessoas")
-    resultado = c.fetchall()
-    conn.close()
+    resultado = db.mostrar_nomes()
     if resultado == []:
         print("Não há nenhum nome na lista.")
     else:
@@ -51,19 +31,16 @@ def remover_nome():
     nome = input("Nome a ser removido: ")
     nome = nome.strip()
     nome = nome.capitalize()
-
-    conn = sqlite3.connect("nomes.db")
-    c = conn.cursor()
-    c.execute("DELETE FROM pessoas WHERE nome = ?", (nome,))
-    conn.commit()
-    if c.rowcount == 0:
-        print("Esse nome não consta em nossos cadastros.")
+    if nome == "":
+        print("Nome inválido. Tente novamente.")
+        return
+    if db.deletar_nome(nome):
+        print("%s foi removido com sucesso."%nome)
     else:
-        print("O nome foi %s removido com sucesso." %nome)
-    conn.close()
+        print("Esse nome não consta em nossos registros.")
 
 def main():
-    init_db()
+    db.init_db()
     while True:
         menu()
         opcao = input("Escolha uma opção: ")
