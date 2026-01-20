@@ -7,18 +7,6 @@ def init_db():
                 (id INTEGER PRIMARY KEY, nome TEXT NOT NULL)''')
     conn.commit()
     conn.close()
-
-def carregar_dados():
-    try:
-        with open("lista-nomes.json", "r") as f:
-            lista_nomes = f.read()
-            x = json.loads(lista_nomes)
-            return x
-    except FileNotFoundError:
-        return []
-
-     
-nomes = carregar_dados()
      
 def menu():
     print("1 - Cadastrar nome")
