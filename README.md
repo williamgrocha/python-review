@@ -23,6 +23,7 @@ O projeto consiste em um sistema simples de CRUD (Create, Read, Update e Delete)
   - `CREATE TABLE`
   - `INSERT`
   - `SELECT`
+  - `UPDATE`
   - `DELETE`
 - Tratamento de erros e validação de entrada do usuário
 
