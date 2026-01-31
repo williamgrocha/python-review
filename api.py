@@ -28,3 +28,14 @@ def inserir_nome(dados: NomeIn):
     else:
         return{"ok": False, "error": "Nome já existe"}
     
+@app.delete("/nomes/{nome}")
+def deletar_nome(nome: str):
+    nome = nome.strip().capitalize()
+
+    if nome == "":
+        return {"ok": False, "error": "Nome inválido"}
+    
+    if db.deletar_nome(nome):
+        return {"ok": True, "message": "Nome deletado com sucesso"}
+    else:
+        return{"ok": False, "error": "Nome não consta nos registros"}
