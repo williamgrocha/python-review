@@ -7,6 +7,10 @@ app = FastAPI()
 class NomeIn(BaseModel):
     nome: str
 
+class NomesPut(BaseModel):
+    nome: str
+    novoNome: str
+
 @app.get("/")
 def root():
     return{"status": "ok", "message":"API funcionando!"}
@@ -16,7 +20,7 @@ def mostrar_nomes():
     nomes = db.mostrar_nomes()
     return {"nomes": nomes}
 
-@app.post("/adicionar")
+@app.post("/nomes")
 def inserir_nome(dados: NomeIn):
     nome = dados.nome.strip().capitalize()
 
@@ -39,3 +43,6 @@ def deletar_nome(nome: str):
         return {"ok": True, "message": "Nome deletado com sucesso"}
     else:
         return{"ok": False, "error": "Nome não consta nos registros"}
+    
+@app.put("/nomes")
+def alterar_nome():
