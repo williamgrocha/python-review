@@ -18,7 +18,7 @@ O projeto evoluiu de um sistema de linha de comando (CLI) para uma API REST util
 
 ### Persistência
 - Armazenamento dos dados em banco SQLite
-- Garantia de unicidade de nomes
+- Garantia de unicidade dos nomes
 - Tratamento de erros e validações
 
 ## 🧠 Conceitos praticados
